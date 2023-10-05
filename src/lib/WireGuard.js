@@ -141,12 +141,11 @@ AllowedIPs = ${client.address}/32`;
       publicKey: client.publicKey,
       createdAt: new Date(client.createdAt),
       updatedAt: new Date(client.updatedAt),
-
+      allowedIPs: client.allowedIPs,
       persistentKeepalive: null,
       latestHandshakeAt: null,
       transferRx: null,
       transferTx: null,
-      allowedIPs: null,
     }));
 
     // Loop WireGuard status
@@ -178,7 +177,7 @@ AllowedIPs = ${client.address}/32`;
         client.transferRx = Number(transferRx);
         client.transferTx = Number(transferTx);
         client.persistentKeepalive = persistentKeepalive;
-        client.allowedIPs = allowedIPs;
+        // client.allowedIPs = allowedIPs;
       });
 
     return clients;
