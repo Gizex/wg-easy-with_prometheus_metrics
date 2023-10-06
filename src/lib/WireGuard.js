@@ -120,7 +120,7 @@ AllowedIPs = ${client.address}/32`;
     await fs.writeFile(path.join(WG_PATH, `${WG_INTERFACE}.json`), JSON.stringify(config, false, 2), {
       mode: 0o660,
     });
-    await fs.writeFile(path.join(WG_PATH, `${WG_INTERFACE}+.conf`), result, {
+    await fs.writeFile(path.join(WG_PATH, `${WG_INTERFACE}.conf`), result, {
       mode: 0o600,
     });
     debug('Config saved.');
