@@ -3,7 +3,6 @@ FROM docker.io/library/node:14-alpine@sha256:dc92f36e7cd917816fa2df041d4e9081453
 # Copy Web UI
 COPY src/ /app/
 WORKDIR /app
-RUN npm install
 RUN npm ci --production
 
 
