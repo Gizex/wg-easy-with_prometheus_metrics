@@ -20,7 +20,7 @@ RUN npm ci --production
 # This saves a lot of disk space.
 FROM docker.io/library/node:14-alpine@sha256:dc92f36e7cd917816fa2df041d4e9081453366381a00f40398d99e9392e78664
 COPY --from=build_node_modules /app /app
-
+COPY --from=mindflavor/prometheus-wireguard-exporter:3.6.6 /usr/local/bin/prometheus_wireguard_exporter /app
 # Move node_modules one directory up, so during development
 # we don't have to mount it in a volume.
 # This results in much faster reloading!
@@ -41,10 +41,12 @@ RUN apk add -U --no-cache \
 # Expose Ports
 EXPOSE 51820/udp
 EXPOSE 51821/tcp
+EXPOSE 51822/tcp
 
 # Set Environment
 ENV DEBUG=Server,WireGuard
 
 # Run Web UI
 WORKDIR /app
-CMD ["/usr/bin/dumb-init", "node", "server.js"]
+# CMD ["/usr/bin/dumb-init", "node", "server.js"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
