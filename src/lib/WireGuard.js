@@ -38,7 +38,7 @@ module.exports = class WireGuard {
         debug('Loading configuration...');
         let config;
         try {
-          config = await fs.readFile(path.join(WG_PATH, WG_INTERFACE+'.json'), 'utf8');
+          config = await fs.readFile(path.join(WG_PATH, `${WG_INTERFACE}.json`), 'utf8');
           config = JSON.parse(config);
           debug('Configuration loaded.');
         } catch (err) {
@@ -60,18 +60,18 @@ module.exports = class WireGuard {
         }
 
         await this.__saveConfig(config);
-        await Util.exec('wg-quick down ${WG_INTERFACE}').catch(() => { });
-        await Util.exec('wg-quick up ${WG_INTERFACE}').catch(err => {
-          if (err && err.message && err.message.includes('Cannot find device "${WG_INTERFACE}"')) {
-            throw new Error('WireGuard exited with the error: Cannot find device "${WG_INTERFACE}"\nThis usually means that your host\'s kernel does not support WireGuard!');
+        await Util.exec(`wg-quick down ${WG_INTERFACE}`).catch(() => { });
+                await Util.exec(`wg-quick up ${WG_INTERFACE}`).catch(err => {
+          if (err && err.message && err.message.includes(`Cannot find device "${WG_INTERFACE}"`)) {
+            throw new Error(`WireGuard exited with the error: Cannot find device "${WG_INTERFACE}"\nThis usually means that your host\'s kernel does not support WireGuard!`);
           }
 
           throw err;
         });
         // await Util.exec(`iptables -t nat -A POSTROUTING -s ${WG_DEFAULT_ADDRESS.replace('x', '0')}/24 -o eth0 -j MASQUERADE`);
         // await Util.exec('iptables -A INPUT -p udp -m udp --dport 51820 -j ACCEPT');
-        // await Util.exec('iptables -A FORWARD -i ${WG_INTERFACE} -j ACCEPT');
-        // await Util.exec('iptables -A FORWARD -o ${WG_INTERFACE} -j ACCEPT');
+        // await Util.exec(`iptables -A FORWARD -i ${WG_INTERFACE} -j ACCEPT`);
+        // await Util.exec(`iptables -A FORWARD -o ${WG_INTERFACE} -j ACCEPT`);
         await this.__syncConfig();
 
         return config;
@@ -117,10 +117,10 @@ AllowedIPs = ${client.address}/32`;
     }
 
     debug('Config saving...');
-    await fs.writeFile(path.join(WG_PATH, WG_INTERFACE+'.json'), JSON.stringify(config, false, 2), {
+    await fs.writeFile(path.join(WG_PATH, `${WG_INTERFACE}.json`), JSON.stringify(config, false, 2), {
       mode: 0o660,
     });
-    await fs.writeFile(path.join(WG_PATH, WG_INTERFACE+'.conf'), result, {
+    await fs.writeFile(path.join(WG_PATH, `${WG_INTERFACE}+.conf`), result, {
       mode: 0o600,
     });
     debug('Config saved.');
@@ -128,7 +128,7 @@ AllowedIPs = ${client.address}/32`;
 
   async __syncConfig() {
     debug('Config syncing...');
-    await Util.exec('wg syncconf ${WG_INTERFACE} <(wg-quick strip ${WG_INTERFACE})');
+    await Util.exec(`wg syncconf ${WG_INTERFACE} <(wg-quick strip ${WG_INTERFACE})`);
     debug('Config synced.');
   }
 
@@ -136,7 +136,7 @@ AllowedIPs = ${client.address}/32`;
     const config = await this.getConfig();
     const clients = Object.entries(config.clients).map(([clientId, client]) => ({
       id: clientId,
-      interface: '${WG_INTERFACE}',
+      interface: `${WG_INTERFACE}`,
       name: client.name,
       enabled: client.enabled,
       address: client.address,
@@ -151,7 +151,7 @@ AllowedIPs = ${client.address}/32`;
     }));
 
     // Loop WireGuard status
-    const dump = await Util.exec('wg show ${WG_INTERFACE} dump', {
+    const dump = await Util.exec(`wg show ${WG_INTERFACE} dump`, {
       log: false,
     });
     dump
