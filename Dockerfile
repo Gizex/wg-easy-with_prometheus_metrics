@@ -9,10 +9,12 @@ RUN npm ci --production
 # Copy build result to a new image.
 # This saves a lot of disk space.
 FROM mindflavor/prometheus-wireguard-exporter:multi-arch-dockerfile as prometheus_wireguard_exporter
-RUN ls -la /app
+RUN ls -lah
 FROM docker.io/library/node:14-alpine@sha256:dc92f36e7cd917816fa2df041d4e9081453366381a00f40398d99e9392e78664
 COPY --from=build_node_modules /app /app
 COPY --from=prometheus_wireguard_exporter /usr/local/bin/prometheus_wireguard_exporter /app/
+RUN ls -la /app
+
 # Move node_modules one directory up, so during development
 # we don't have to mount it in a volume.
 # This results in much faster reloading!
