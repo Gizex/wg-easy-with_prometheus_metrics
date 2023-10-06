@@ -11,7 +11,7 @@ FROM docker.io/library/node:14-alpine@sha256:dc92f36e7cd917816fa2df041d4e9081453
 COPY --from=build_node_modules /app /app
 
 RUN mv /app/node_modules /node_modules
-COPY --from=mindflavor/prometheus-wireguard-exporter:multi-arch-dockerfile /usr/local/bin/prometheus_wireguard_exporter /usr/local/bin/
+COPY --from=mindflavor/prometheus-wireguard-exporter:3.6.6 /usr/local/bin/prometheus_wireguard_exporter /usr/local/bin/
 COPY --chmod=755 docker-entrypoint.sh /docker-entrypoint.sh
 # Enable this to run `npm run serve`
 RUN npm i -g nodemon
