@@ -1,13 +1,7 @@
-# WireGuard Easy
-
-[![Build & Publish Docker Image to Docker Hub](https://github.com/WeeJeWel/wg-easy/actions/workflows/deploy.yml/badge.svg?branch=production)](https://github.com/WeeJeWel/wg-easy/actions/workflows/deploy.yml)
-[![Lint](https://github.com/WeeJeWel/wg-easy/actions/workflows/lint.yml/badge.svg?branch=master)](https://github.com/WeeJeWel/wg-easy/actions/workflows/lint.yml)
-[![Docker](https://img.shields.io/docker/v/weejewel/wg-easy/latest)](https://hub.docker.com/r/weejewel/wg-easy)
-[![Docker](https://img.shields.io/docker/pulls/weejewel/wg-easy.svg)](https://hub.docker.com/r/weejewel/wg-easy)
-[![Sponsor](https://img.shields.io/github/sponsors/weejewel)](https://github.com/sponsors/WeeJeWel)
+# WireGuard Easy with prometheus metrics
 
 You have found the easiest way to install & manage WireGuard on any Linux host!
-
+Forked [wg-easy](https://github.com/WeeJeWel/wg-easy)
 <p align="center">
   <img src="./assets/screenshot.png" width="802" />
 </p>
@@ -70,10 +64,6 @@ The Web UI will now be available on `http://0.0.0.0:51821`.
 
 > 💡 Your configuration files will be saved in `~/.wg-easy`
 
-### 3. Sponsor
-
-Are you enjoying this project? [Buy me a beer!](https://github.com/sponsors/WeeJeWel) 🍻
-
 ## Options
 
 These options can be configured by setting environment variables using `-e KEY="VALUE"` in the `docker run` command.
@@ -92,6 +82,7 @@ These options can be configured by setting environment variables using `-e KEY="
 | `WG_POST_UP` | `...` | `iptables ...` | See [config.js](https://github.com/WeeJeWel/wg-easy/blob/master/src/config.js#L20) for the default value. |
 | `WG_PRE_DOWN` | `...` | - | See [config.js](https://github.com/WeeJeWel/wg-easy/blob/master/src/config.js#L27) for the default value. |
 | `WG_POST_DOWN` | `...` | `iptables ...` | See [config.js](https://github.com/WeeJeWel/wg-easy/blob/master/src/config.js#L28) for the default value. |
+| `WG_INTERFACE` | `wg0` | `wg1` | Set wireguard interface |
 
 > If you change `WG_PORT`, make sure to also change the exposed port.
 
@@ -107,6 +98,3 @@ docker pull weejewel/wg-easy
 
 And then run the `docker run -d \ ...` command above again.
 
-## Common Use Cases
-
-* [Using WireGuard-Easy with Pi-Hole](https://github.com/WeeJeWel/wg-easy/wiki/Using-WireGuard-Easy-with-Pi-Hole)

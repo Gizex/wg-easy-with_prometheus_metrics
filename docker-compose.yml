@@ -4,7 +4,7 @@ services:
     environment:
       # ⚠️ Required:
       # Change this to your host's public address
-      - WG_HOST=raspberrypi.local
+      - WG_HOST=0.0.0.0
 
       # Optional:
       # - PASSWORD=foobar123
@@ -22,13 +22,14 @@ services:
       # - WG_INTERFACE=wg0
       - WG_PERSISTENT_KEEPALIVE=25
       - WG_DEVICE=enp0s6
-    image: weejewel/wg-easy
+    image: gizex/wg-easy
     container_name: wg-easy
     volumes:
       - .:/etc/wireguard
     ports:
       - "51820:51820/udp"
-      - "51821:51821/tcp"
+      - "51821:51821/tcp" # web-ui port
+      - "51822:51822" # metrics port
     restart: unless-stopped
     cap_add:
       - NET_ADMIN
