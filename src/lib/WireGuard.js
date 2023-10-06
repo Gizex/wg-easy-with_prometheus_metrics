@@ -108,6 +108,7 @@ PostDown = ${WG_POST_DOWN}
       result += `
 
 # Client: ${client.name} (${clientId})
+# friendly_name = ${client.name}
 [Peer]
 PublicKey = ${client.publicKey}
 PresharedKey = ${client.preSharedKey}
