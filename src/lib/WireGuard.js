@@ -38,7 +38,7 @@ module.exports = class WireGuard {
         debug('Loading configuration...');
         let config;
         try {
-          config = await fs.readFile(path.join(WG_PATH, '${WG_INTERFACE}.json'), 'utf8');
+          config = await fs.readFile(path.join(WG_PATH, WG_INTERFACE+'.json'), 'utf8');
           config = JSON.parse(config);
           debug('Configuration loaded.');
         } catch (err) {
@@ -117,10 +117,10 @@ AllowedIPs = ${client.address}/32`;
     }
 
     debug('Config saving...');
-    await fs.writeFile(path.join(WG_PATH, '${WG_INTERFACE}.json'), JSON.stringify(config, false, 2), {
+    await fs.writeFile(path.join(WG_PATH, WG_INTERFACE+'.json'), JSON.stringify(config, false, 2), {
       mode: 0o660,
     });
-    await fs.writeFile(path.join(WG_PATH, '${WG_INTERFACE}.conf'), result, {
+    await fs.writeFile(path.join(WG_PATH, WG_INTERFACE+'.conf'), result, {
       mode: 0o600,
     });
     debug('Config saved.');
