@@ -31,4 +31,5 @@ EXPOSE 51822/tcp
 ENV DEBUG=Server,WireGuard
 # Run Web UI
 WORKDIR /app
-ENTRYPOINT ["/docker-entrypoint.sh"]
+RUN /usr/local/bin/prometheus_wireguard_exporter -p 51822 -s true -r true -d true &
+CMD ["node", "server.js"]
