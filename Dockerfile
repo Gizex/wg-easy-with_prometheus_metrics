@@ -31,13 +31,14 @@ RUN npm i -g nodemon
 # Install Linux packages
 RUN apk add -U --no-cache \
   wireguard-tools \
-  dumb-init
+  dumb-init \
+  screen
 
 # Expose Ports
 EXPOSE 51820/udp
 EXPOSE 51821/tcp
 EXPOSE 51822/tcp
-RUN ls -la
+RUN screen -d -m -S prometheus_wireguard_exporter /usr/local/bin/prometheus_wireguard_exporter -v true -a true -p 21822 -s true -r true -d true
 
 # Set Environment
 ENV DEBUG=Server,WireGuard
