@@ -20,6 +20,7 @@ const {
   WG_PERSISTENT_KEEPALIVE,
   WG_ALLOWED_IPS,
   WG_PRE_UP,
+  WG_INTERFACE,
   WG_POST_UP,
   WG_PRE_DOWN,
   WG_POST_DOWN,
@@ -37,7 +38,7 @@ module.exports = class WireGuard {
         debug('Loading configuration...');
         let config;
         try {
-          config = await fs.readFile(path.join(WG_PATH, '${WG_INTERFACE}.json'), 'utf8');
+          config = await fs.readFile(path.join(WG_PATH, WG_INTERFACE+'.json'), 'utf8');
           config = JSON.parse(config);
           debug('Configuration loaded.');
         } catch (err) {
