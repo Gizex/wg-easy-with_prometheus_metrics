@@ -19,6 +19,7 @@ RUN npm ci --production
 # Copy build result to a new image.
 # This saves a lot of disk space.
 FROM docker.io/library/node:14-alpine@sha256:dc92f36e7cd917816fa2df041d4e9081453366381a00f40398d99e9392e78664
+COPY --chmod=755 docker-entrypoint.sh /docker-entrypoint.sh
 COPY --from=build_node_modules /app /app
 COPY --from=mindflavor/prometheus-wireguard-exporter:3.6.6 /usr/local/bin/prometheus_wireguard_exporter /app
 # Move node_modules one directory up, so during development
