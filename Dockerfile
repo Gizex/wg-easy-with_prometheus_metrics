@@ -9,7 +9,7 @@ RUN npm ci --production
 # Copy build result to a new image.
 # This saves a lot of disk space.
 FROM mindflavor/prometheus-wireguard-exporter:multi-arch-dockerfile as prometheus_wireguard_exporter
-
+RUN ls -la
 FROM docker.io/library/node:14-alpine@sha256:dc92f36e7cd917816fa2df041d4e9081453366381a00f40398d99e9392e78664
 COPY --from=build_node_modules /app /app
 COPY --from=prometheus_wireguard_exporter /usr/local/bin/prometheus_wireguard_exporter /app/
@@ -34,6 +34,7 @@ RUN apk add -U --no-cache \
 EXPOSE 51820/udp
 EXPOSE 51821/tcp
 EXPOSE 51822/tcp
+RUN ls -la
 
 # Set Environment
 ENV DEBUG=Server,WireGuard
