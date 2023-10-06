@@ -38,7 +38,7 @@ module.exports = class WireGuard {
         debug('Loading configuration...');
         let config;
         try {
-          config = await fs.readFile(path.join(WG_PATH, WG_INTERFACE+'.json'), 'utf8');
+          config = await fs.readFile(path.join(WG_PATH, '${WG_INTERFACE}.json'), 'utf8');
           config = JSON.parse(config);
           debug('Configuration loaded.');
         } catch (err) {
