@@ -91,6 +91,7 @@ module.exports = class WireGuard {
 # Your changes will be overwritten!
 
 # Server
+# friendly_name = ${WG_INTERFACE}.server
 [Interface]
 PrivateKey = ${config.server.privateKey}
 Address = ${config.server.address}/24
@@ -105,7 +106,6 @@ PostDown = ${WG_POST_DOWN}
       if (!client.enabled) continue;
 
       result += `
-
 # Client: ${client.name} (${clientId})
 # friendly_name = ${client.name}
 [Peer]
