@@ -91,7 +91,6 @@ module.exports = class WireGuard {
 # Your changes will be overwritten!
 
 # Server
-# friendly_name = ${WG_INTERFACE}.server
 [Interface]
 PrivateKey = ${config.server.privateKey}
 Address = ${config.server.address}/24
@@ -107,11 +106,13 @@ PostDown = ${WG_POST_DOWN}
 
       result += `
 # Client: ${client.name} (${clientId})
-# friendly_name = ${client.name}
 [Peer]
 PublicKey = ${client.publicKey}
 PresharedKey = ${client.preSharedKey}
-AllowedIPs = ${client.address}/32`;
+AllowedIPs = ${client.address}/32
+# friendly_name = ${client.name}.${WG_INTERFACE}
+
+`;
     }
 
     debug('Config saving...');
